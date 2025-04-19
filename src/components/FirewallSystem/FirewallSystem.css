@@ -1,0 +1,294 @@
+.firewall-system {
+    background-color: rgba(15, 23, 42, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .firewall-system.active {
+    border-color: #4ade80;
+  }
+  
+  .firewall-system.inactive {
+    opacity: 0.7;
+    filter: grayscale(50%);
+    pointer-events: none;
+  }
+  
+  .system-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .system-header h2 {
+    color: #4ade80;
+    margin: 0;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+  }
+  
+  .system-status {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+  
+  .system-status.secure {
+    background-color: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.4);
+  }
+  
+  .system-status.warning {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+  }
+  
+  .system-status.compromised {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+  }
+  
+  .firewalls-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .firewall-unit {
+    background-color: rgba(30, 41, 59, 0.6);
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .firewall-unit.under-attack {
+    border-color: #f59e0b;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+  }
+  
+  .firewall-unit.breached {
+    border-color: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+  }
+  
+  .firewall-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .firewall-header h3 {
+    color: #e2e8f0;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  
+  .status-indicator {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+  
+  .status-indicator.secure {
+    background-color: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+  }
+  
+  .status-indicator.warning {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+  }
+  
+  .status-indicator.breached {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    animation: blink 1.5s infinite;
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  
+  .progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .progress-bar {
+    height: 12px;
+    background-color: rgba(30, 41, 59, 0.8);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4ade80, #f59e0b, #ef4444);
+    background-size: 300% 100%;
+    transition: width 0.3s ease-out;
+    animation: gradient-shift 3s infinite alternate;
+  }
+  
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  
+  .progress-text {
+    text-align: right;
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+  
+  .breach-summary {
+    background-color: rgba(239, 68, 68, 0.15);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    border-left: 4px solid #ef4444;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .breach-summary h3 {
+    color: #ef4444;
+    margin-top: 0;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .breach-summary h3 i {
+    animation: pulse 1.5s infinite;
+  }
+  
+  .breach-details {
+    background-color: rgba(30, 41, 59, 0.6);
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .detail-row {
+    display: flex;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  }
+  
+  .detail-row:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  
+  .detail-label {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    min-width: 100px;
+  }
+  
+  .detail-value {
+    color: #e2e8f0;
+    font-weight: bold;
+    flex-grow: 1;
+  }
+  
+  .breach-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .block-button, .report-button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .block-button {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+  }
+  
+  .block-button:hover {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+  }
+  
+  .report-button {
+    background-color: transparent;
+    color: #e2e8f0;
+    border: 1px solid #94a3b8;
+  }
+  
+  .report-button:hover {
+    background-color: rgba(148, 163, 184, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .threat-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .threat-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .threat-badge.low {
+    background-color: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+  }
+  
+  .threat-badge.middle {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+  }
+  
+  .threat-badge.high {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }

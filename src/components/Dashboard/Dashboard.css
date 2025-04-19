@@ -1,0 +1,223 @@
+.dashboard-container {
+  min-height: 100vh;
+  background-color: #0c1220;
+  color: #e2e8f0;
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(0, 255, 200, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(0, 100, 255, 0.03) 0%, transparent 50%);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.logo-area h1 {
+  color: #4ade80;
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.welcome-text {
+  display: block;
+  color: #e2e8f0;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.status-text {
+  display: block;
+  font-size: 0.8rem;
+  color: #4ade80;
+}
+
+.alert-message {
+  padding: 12px 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+  display: flex;
+  align-items: center;
+}
+
+.alert-message::before {
+  font-family: 'Font Awesome 5 Free';
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.alert-message.warning {
+  background-color: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border-left: 4px solid #f59e0b;
+}
+
+.alert-message.warning::before {
+  content: "\f071";
+}
+
+.alert-message.critical {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border-left: 4px solid #ef4444;
+}
+
+.alert-message.critical::before {
+  content: "\f06a"; 
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.7);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4ade80;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #22c55e;
+}
+
+
+.dashboard-container > div {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+} 
+
+ AI Optimization Analysis Button Styles
+.ai-optimization-button-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.ai-optimization-button {
+  background: linear-gradient(45deg, #0c1220, #1e293b);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 8px;
+  padding: 15px 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 350px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.ai-optimization-button:hover {
+  background: linear-gradient(45deg, #1e293b, #334155);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  border-color: rgba(74, 222, 128, 0.5);
+}
+
+.ai-optimization-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-icon {
+  margin-right: 12px;
+  font-size: 1.3rem;
+}
+
+.button-text {
+  letter-spacing: 0.5px;
+}
+ /* Add this to your existing Dashboard.css file */
+
+.analysis-button-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.ai-analysis-button {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #3b82f6, #4ade80);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+  width: 100%;
+  max-width: 400px;
+}
+
+.ai-analysis-button:hover {
+  background: linear-gradient(135deg, #2563eb, #22c55e);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+.ai-analysis-button i {
+  font-size: 1.3rem;
+}
+
+.ai-analysis-button:active {
+  transform: translateY(1px);
+}
