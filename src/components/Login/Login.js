@@ -9,7 +9,7 @@ const Login = ({ onLogin }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Simple credential check - in a real app, this would be an API call
-    if (username === 'admin' && password === 'secureSys123') {
+    if (username === 'admin' && password === 'admin123') {
       onLogin(username);
     } else {
       setError('Invalid credentials. Access denied.');
@@ -54,7 +54,7 @@ const Login = ({ onLogin }) => {
         </form>
         <div className="login-footer">
           <p>Authorized Personnel Only</p>
-          <p className="small-text">CREDENTIALS: admin / secureSys123</p>
+          <p className="small-text">CREDENTIALS: admin / admin123</p>
         </div>
       </div>
     </div>

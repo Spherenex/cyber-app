@@ -56,28 +56,6 @@ const BreachDetection = ({ intruderInfo }) => {
           </div>
         </div>
       </div>
-{/*       
-      <div className="breach-actions">
-        <button className="action-button block">Block Access</button>
-        <button className="action-button track">Track Activity</button>
-        <button className="action-button report">Report Intrusion</button>
-      </div> */}
-      
-      {/* <div className="breach-map">
-        <h3>Intrusion Origin Location</h3>
-        {showMap ? (
-          <Player
-            autoplay
-            loop
-            src="https://assets2.lottiefiles.com/private_files/lf30_ng0qgfer.json"
-            style={{ height: '200px', width: '100%', background: 'rgba(15, 23, 42, 0.7)' }}
-          />
-        ) : (
-          <div className="map-placeholder">
-            <div className="ping"></div>
-          </div>
-        )}
-      </div> */}
     </div>
   );
 };

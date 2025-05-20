@@ -18,6 +18,7 @@
   }
   
   .ai-optimization-popup {
+    height: 630px;
     width: 90%;
     max-width: 600px;
     background-color: rgba(30, 41, 59, 0.95);
@@ -183,3 +184,26 @@
     50% { opacity: 0.7; }
     100% { opacity: 1; }
   }
+  /* Cancel button styles */
+.cancel-button {
+  background-color: rgba(255, 50, 50, 0.2);
+  color: #ff5050;
+  border: 1px solid rgba(255, 50, 50, 0.5);
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.cancel-button:hover {
+  background-color: rgba(255, 50, 50, 0.4);
+  box-shadow: 0 0 10px rgba(255, 50, 50, 0.5);
+}
+
+.cancel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
