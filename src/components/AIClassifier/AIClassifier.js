@@ -1661,7 +1661,7 @@ const AIClassifier = ({ threatLevel = 0 }) => {
 
         totalNonBackgroundPixels++;
 
-        if (g > 100 && g > r * 1.2 && g > b * 1.2) {
+        if (g > 100 && g > r * 1.2 && g > b * 1.2) { 
           brightGreenPixels++;
           greenPixels++;
         } else if (g > r && g > b) {
@@ -1851,34 +1851,122 @@ const AIClassifier = ({ threatLevel = 0 }) => {
   };
 
   // Write to Firebase
-  const writeToFirebase = async (resultData) => {
-    try {
-      setFirebaseStatus('Processing results...');
-      const { isGood, actualIsGood, threatLevel } = resultData;
+//  const writeToFirebase = async (resultData)  => {
+//     try {
+//       setFirebaseStatus('Processing results...');
+//       const { isGood, actualIsGood, threatLevel } = resultData;
 
-      const directoryName = threatLevel === 1 ? 'basic' : threatLevel === 2 ? 'middle' : 'critical';
-      const values = threatLevel === 1
-        ? actualIsGood ? [1, 3, 5] : [2, 4, 6]
-        : actualIsGood ? [2, 3, 6] : [1, 4, 5];
+//       const directoryName = threatLevel === 1 ? 'basic' : threatLevel === 2 ? 'middle' : 'critical';
+//       const values = threatLevel === 1
+//         ? actualIsGood ? [1, 3, 5] : [2, 4, 6]
+//         : actualIsGood ? [2, 3, 6] : [1, 4, 5];
 
-      const firebaseData = {
-        displayedAs: isGood ? 'good' : 'bad',
-        actualQuality: actualIsGood ? 'good' : 'bad',
-        threatLevel,
-        timestamp: Date.now(),
-        values
-      };
+//       const firebaseData = {
+//         displayedAs: isGood ? 'good' : 'bad',
+//         actualQuality: actualIsGood ? 'good' : 'bad',
+//         threatLevel,
+//         timestamp: Date.now(),
+//         values
+//       };
 
-      console.log('Writing to Firebase:', firebaseData);
-      await set(ref(database, `classification_results/${directoryName}/${firebaseData.timestamp}`), firebaseData);
-      setFirebaseStatus('Data saved successfully');
-      return true;
-    } catch (error) {
-      setFirebaseStatus(`Firebase error: ${error.message}`);
-      console.error('Firebase write failed:', error);
-      return false;
+//       console.log('Writing to Firebase:', firebaseData);
+//       await set(ref(database, `classification_results/${directoryName}/${firebaseData.timestamp}`), firebaseData);
+//       setFirebaseStatus('Data saved successfully');
+//       return true;
+//     } catch (error) {
+//       setFirebaseStatus(`Firebase error: ${error.message}`);
+//       console.error('Firebase write failed:', error);
+//       return false;
+//     }
+//   };
+
+
+// Write to Firebase with direct updates to classifier_result path and cooldown period
+const writeToFirebase = async (resultData) => {
+  // Add static flag to track update status - using a module-level variable
+  if (writeToFirebase.isUpdating) {
+    console.log('Update already in progress, skipping...');
+    setFirebaseStatus('Update already in progress, will retry after cooldown');
+    return false;
+  }
+
+  try {
+    writeToFirebase.isUpdating = true;
+    setFirebaseStatus('Processing results...');
+    const { isGood, actualIsGood, threatLevel } = resultData;
+
+    // EXPLICIT logic for setting servo commands based on actualQuality
+    let initialServoCommand, finalServoCommand;
+    
+    if (actualIsGood === true) {
+      // For GOOD fruit
+      initialServoCommand = 1;
+      finalServoCommand = 5;
+      console.log('Good fruit detected: Setting values 1 and 5');
+    } else {
+      // For BAD fruit
+      initialServoCommand = 2;
+      finalServoCommand = 6;
+      console.log('Bad fruit detected: Setting values 2 and 6');
     }
-  };
+    
+    // Update servoCommand directly in classifier_result
+    console.log(`Setting initial servoCommand to ${initialServoCommand}`);
+    await set(ref(database, 'classifier_result/servoCommand'), initialServoCommand);
+    
+    // Then update the rest of the data
+    await set(ref(database, 'classifier_result'), {
+      displayedAs: isGood ? 'good' : 'bad',
+      actualQuality: actualIsGood ? 'good' : 'bad',
+      threatLevel,
+      timestamp: Date.now(),
+      values: threatLevel === 1
+        ? actualIsGood ? [1, 3, 5] : [2, 4, 6]
+        : actualIsGood ? [2, 3, 6] : [1, 4, 5],
+      servoCommand: initialServoCommand
+    });
+    
+    setFirebaseStatus(`Data saved with servoCommand: ${initialServoCommand}`);
+    
+    // Update after EXACTLY 5 seconds
+    setTimeout(async () => {
+      try {
+        console.log(`Updating servoCommand from ${initialServoCommand} to ${finalServoCommand}`);
+        await set(ref(database, 'classifier_result/servoCommand'), finalServoCommand);
+        setFirebaseStatus(`Servo command updated to ${finalServoCommand}. Cooldown active for 1 minute.`);
+        
+        // Start cooldown period of 1 minute before allowing new updates
+        setTimeout(() => {
+          writeToFirebase.isUpdating = false;
+          setFirebaseStatus('Ready for new classification');
+          console.log('Cooldown complete, ready for new updates');
+        }, 60000); // 1 minute cooldown
+        
+      } catch (updateError) {
+        console.error('Error updating servo command:', updateError);
+        setFirebaseStatus(`Error updating servo command: ${updateError.message}`);
+        writeToFirebase.isUpdating = false; // Reset on error
+      }
+    }, 5000); // EXACTLY 5 seconds (5000ms) delay
+    
+    return true;
+  } catch (error) {
+    setFirebaseStatus(`Firebase error: ${error.message}`);
+    console.error('Firebase write failed:', error);
+    writeToFirebase.isUpdating = false; // Reset on error
+    return false;
+  }
+};
+
+// Initialize the static flag
+writeToFirebase.isUpdating = false;
+
+// Initialize the static flag
+writeToFirebase.isUpdating = false;
+
+// Initialize the static flag
+writeToFirebase.isUpdating = false;
+
 
   // Perform classification with 1-minute scanning
   const performClassification = async () => {
