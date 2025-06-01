@@ -1,3 +1,5 @@
+
+
 // import React, { useState } from 'react';
 // import './ThreatGenerator.css';
 // import { Player } from '@lottiefiles/react-lottie-player';
@@ -75,12 +77,12 @@
 //                 </div>
 //                 <div className="animation-container">
 //                 <Player
-//   autoplay
-//   loop
-//   src="https://assets4.lottiefiles.com/packages/lf20_puciaact.json"
-//   style={{ height: '150px', width: '100%' }}
-// />
-// </div>
+//                   autoplay
+//                   loop
+//                   src="https://assets4.lottiefiles.com/packages/lf20_puciaact.json"
+//                   style={{ height: '150px', width: '100%' }}
+//                 />
+//                 </div>
 //             </div>
 
 //             {alertVisible && (
@@ -131,7 +133,7 @@
 //                                     checked={threatTypes[type].level === 'critical'}
 //                                     onChange={() => handleCheckboxChange(type, 'critical')}
 //                                 />
-//                                 <label htmlFor={`${type}-critical`}>critical</label>
+//                                 <label htmlFor={`${type}-critical`}>Critical</label>
 //                             </div>
 //                         </div>
 //                     </div>
@@ -165,6 +167,9 @@
 
 // export default ThreatGenerator;
 
+
+
+
 import React, { useState } from 'react';
 import './ThreatGenerator.css';
 import { Player } from '@lottiefiles/react-lottie-player';
@@ -175,7 +180,8 @@ const ThreatGenerator = ({ onThreatGenerated }) => {
         WLAN: { selected: false, level: null },
         TCPIP: { selected: false, level: null },
         HTTP: { selected: false, level: null },
-        Firewall: { selected: false, level: null }
+        Firewall: { selected: false, level: null },
+        DoS: { selected: false, level: null } // Added DoS threat type
     });
 
     const [generatedIP, setGeneratedIP] = useState(null);
@@ -261,12 +267,16 @@ const ThreatGenerator = ({ onThreatGenerated }) => {
                 {Object.keys(threatTypes).map(type => (
                     <div key={type} className="protocol-card">
                         <div className="protocol-header">
-                            <h3>{type === 'TCPIP' ? 'TCP/IP' : type}</h3>
+                            <h3>{type === 'TCPIP' ? 'TCP/IP' : 
+                                 type === 'DoS' ? 'Denial of Service' : type}</h3>
                             <div className="protocol-icon">
-                                <i className={`fas ${type === 'WLAN' ? 'fa-wifi' :
-                                        type === 'TCPIP' ? 'fa-network-wired' :
-                                            type === 'HTTP' ? 'fa-globe' : 'fa-shield-alt'
-                                    }`}></i>
+                                <i className={`fas ${
+                                    type === 'WLAN' ? 'fa-wifi' :
+                                    type === 'TCPIP' ? 'fa-network-wired' :
+                                    type === 'HTTP' ? 'fa-globe' : 
+                                    type === 'DoS' ? 'fa-ban' :
+                                    'fa-shield-alt'
+                                }`}></i>
                             </div>
                         </div>
 
